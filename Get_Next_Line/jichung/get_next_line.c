@@ -6,7 +6,7 @@
 /*   By: sshin <sshin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 10:08:19 by jichung           #+#    #+#             */
-/*   Updated: 2021/06/01 21:41:58 by sshin            ###   ########.fr       */
+/*   Updated: 2021/06/01 22:00:12 by sshin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,6 @@ static int	nl_in_backup(char **line, char **backup)
 	return (result);
 }
 
-// read_fd 함수 다음의 과정을 구조적으로 세가지로 기능한다.
-// 1. 오류발생 -> -1 반환
-// 2. 파일의 데이터를 읽고 개행이 발견되면 nl_in_buf 함수 호출
-// 3. 파일의 데이터를 읽지 못하면(read_size = 0) get_next_line 함수로 돌아가서 line을 할당
-
 static int	read_fd(int fd, char **buf)
 {
 	char	*tmp;
@@ -56,7 +51,7 @@ static int	read_fd(int fd, char **buf)
 		// 차라리 tmp1, tmp2 혹은 big_tmp, small_tmp로 구분하는것이 좀더 직관적이지 않을까? -sshin
 		if (!(buf_tmp = strallcat(*buf, tmp)))
 			// 여기서 rb변수를 read byte라는 변수명과 전혀 다른 의미로 사용하고 있다.
-			// flag용 변수를 하나 더 선언하여 사용하는것이 좋지 않을까? -sshin
+			// flag용 변수를 하나 더 선언하여 사용하는것이 좋지 않을까? 노미네트 때문이겠지만,, -sshin
 			rb = -1;
 		free(*buf);
 		free(tmp);
@@ -69,7 +64,7 @@ static int	read_fd(int fd, char **buf)
 			rb = -1;
 	}
 	free(tmp);
-	return (rb); // read_size = 0
+	return (rb);
 }
 
 // nl in backup, nl_in_buf 함수는 코드 12줄이 완전히 동일하다.
@@ -92,7 +87,7 @@ static int	nl_in_buf(char **buf, char **line, char **backup)
 	return (result);
 }
 
-// libft 함수를 최대한 활용했으면 좀 더 이해하기 쉬운 코드가 되었을것 같음. - sshin
+// 표준함수를 최대한 활용했으면 좀 더 이해하기 쉬운 코드가 되었을것 같음. - sshin
 // nl_in_backup, nl_in_buf 함수는 함수 내에서 (표준 라이브러리 함수가 아닌) '제작한 함수를 2개 호출'한다.
 // 각 함수의 기능은 최대한 독립적으로 만드는것이 좋다는것에 위배됨. -sshin
 int			get_next_line(int fd, char **line)
@@ -117,7 +112,6 @@ int			get_next_line(int fd, char **line)
 	if (!backup[fd])
 		*buf = '\0';
 	free(backup[fd]);
-
 	result = read_fd(fd, &buf);
 	if (result == 1)
 		return (nl_in_buf(&buf, line, &backup[fd]));
