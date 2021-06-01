@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jichung <jichung@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sshin <sshin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 10:08:19 by jichung           #+#    #+#             */
-/*   Updated: 2021/05/28 17:02:03 by jichung          ###   ########.fr       */
+/*   Updated: 2021/06/01 18:58:43 by sshin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,13 @@ static int	nl_in_buf(char **buf, char **line, char **backup)
 	return (result);
 }
 
+// 코드를 논리 흐름에 따라 위에서 아래로 읽도록 배치하는것이 좋을것 같다.
+// 다른 함수를 볼 때 가장 많이 참고하는것은 get_next_line 함수이기 때문. - sshin
 int			get_next_line(int fd, char **line)
 {
 	char		*buf;
+	// *backup 원소의 갯수를 256으로 제한하는 것은 256이상의 fd에 대해 동작하지 않음. (fd의 최대갯수는 시스템에 따라 상이함)
+	// 기본 라이브러리 limits.h를 include 하여 OPEN_MAX 매크로를 사용하는것을 추천함. -sshin
 	static char	*backup[256];
 	int			result;
 

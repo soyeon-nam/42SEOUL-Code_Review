@@ -6,7 +6,7 @@
 /*   By: sshin <sshin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 20:57:47 by sshin             #+#    #+#             */
-/*   Updated: 2021/06/01 18:52:30 by sshin            ###   ########.fr       */
+/*   Updated: 2021/06/01 19:00:51 by sshin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		get_next_line(int fd, char **line)
 	int				read_size;
 	int				idx_to_split;
 
-	if (BUFFER_SIZE < 1 || fd < 0 || !line || OPEN_MAX <= fd)
+	if (BUFFER_SIZE < 1 || (fd < 0 && OPEN_MAX <= fd) || !line )
 		return (_ERROR);
 	read_file_ret = _GO_TO_SPLIT_LINE_WITHOUT_READ;
 	// Check if line feeds already exist in backup[fd].(case1)
