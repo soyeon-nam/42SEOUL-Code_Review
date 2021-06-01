@@ -1,0 +1,105 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jichung <jichung@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/05/20 10:08:19 by jichung           #+#    #+#             */
+/*   Updated: 2021/05/28 17:02:03 by jichung          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "get_next_line.h"
+
+static int	nl_in_backup(char **line, char **backup)
+{
+	char	**strs;
+	int		result;
+
+	result = 1;
+	strs = split_by_nl(*backup);
+	if (!(*line = strallcat(NULL, strs[0])))
+		result = -1;
+	free(*backup);
+	if (result == 1)
+		if (!(*backup = strallcat(NULL, strs[1])))
+			result = -1;
+	free(strs[0]);
+	free(strs[1]);
+	free(strs);
+	return (result);
+}
+
+static int	read_fd(int fd, char **buf)
+{
+	char	*tmp;
+	char	*buf_tmp;
+	int		rb;
+
+	if (!(tmp = (char *)malloc(BUFFER_SIZE + 1)))
+		return (-1);
+	while ((rb = read(fd, tmp, BUFFER_SIZE)) > 0)
+	{
+		tmp[rb] = '\0';
+		if (!(buf_tmp = strallcat(*buf, tmp)))
+			rb = -1;
+		free(*buf);
+		free(tmp);
+		if (!(*buf = strallcat(NULL, buf_tmp)))
+			rb = -1;
+		free(buf_tmp);
+		if ((rb != -1) && is_nl(*buf))
+			return (1);
+		if (!(tmp = (char *)malloc(BUFFER_SIZE + 1)))
+			rb = -1;
+	}
+	free(tmp);
+	return (rb);
+}
+
+static int	nl_in_buf(char **buf, char **line, char **backup)
+{
+	char	**strs;
+	int		result;
+
+	result = 1;
+	strs = split_by_nl(*buf);
+	free(*buf);
+	if (!(*line = strallcat(NULL, strs[0])))
+		result = -1;
+	if (!(*backup = strallcat(NULL, strs[1])))
+		result = -1;
+	free(strs[0]);
+	free(strs[1]);
+	free(strs);
+	return (result);
+}
+
+int			get_next_line(int fd, char **line)
+{
+	char		*buf;
+	static char	*backup[256];
+	int			result;
+
+	if (BUFFER_SIZE < 1 || fd < 0 || fd > 255 || !line)
+		return (-1);
+	if (is_nl(backup[fd]))
+		return (nl_in_backup(line, &backup[fd]));
+	if (!(buf = strallcat(NULL, backup[fd])))
+		return (-1);
+	if (!backup[fd])
+		*buf = '\0';
+	free(backup[fd]);
+	result = read_fd(fd, &buf);
+	if (result == 1)
+		return (nl_in_buf(&buf, line, &backup[fd]));
+	if (result == 0)
+	{
+		if (!(*line = strallcat(NULL, buf)))
+			result = -1;
+		backup[fd] = NULL;
+	}
+	free(buf);
+	return (result);
+}
