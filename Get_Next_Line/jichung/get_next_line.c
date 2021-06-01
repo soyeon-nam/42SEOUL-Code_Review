@@ -6,12 +6,13 @@
 /*   By: sshin <sshin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 10:08:19 by jichung           #+#    #+#             */
-/*   Updated: 2021/06/01 18:58:43 by sshin            ###   ########.fr       */
+/*   Updated: 2021/06/01 19:16:27 by sshin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
+// 취향의 영역이긴 하지만, 함수명은 동사로 작성하는것이 좋다는것이 일반론임. -sshin
 static int	nl_in_backup(char **line, char **backup)
 {
 	char	**strs;
@@ -19,6 +20,7 @@ static int	nl_in_backup(char **line, char **backup)
 
 	result = 1;
 	strs = split_by_nl(*backup);
+
 	if (!(*line = strallcat(NULL, strs[0])))
 		result = -1;
 	free(*backup);
@@ -76,8 +78,9 @@ static int	nl_in_buf(char **buf, char **line, char **backup)
 	return (result);
 }
 
-// 코드를 논리 흐름에 따라 위에서 아래로 읽도록 배치하는것이 좋을것 같다.
-// 다른 함수를 볼 때 가장 많이 참고하는것은 get_next_line 함수이기 때문. - sshin
+// 코드를 논리 흐름에 따라 위에서 아래로 읽도록 배치하는것이 좋을것 같다. (get_next_line 함수를 가장 위로 배치)
+// 다른 함수를 볼 때 가장 많이 참고하는것은 get_next_line 함수이기 때문.
+// libft 함수를 최대한 활용했으면 좀 더 이해하기 쉬운 코드가 되었을것 같음. - sshin
 int			get_next_line(int fd, char **line)
 {
 	char		*buf;
@@ -90,6 +93,7 @@ int			get_next_line(int fd, char **line)
 		return (-1);
 	if (is_nl(backup[fd]))
 		return (nl_in_backup(line, &backup[fd]));
+
 	if (!(buf = strallcat(NULL, backup[fd])))
 		return (-1);
 	if (!backup[fd])
