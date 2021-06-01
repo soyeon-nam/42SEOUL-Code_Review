@@ -6,7 +6,7 @@
 /*   By: sshin <sshin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 20:57:47 by sshin             #+#    #+#             */
-/*   Updated: 2021/06/01 19:02:07 by sshin            ###   ########.fr       */
+/*   Updated: 2021/06/01 20:08:25 by sshin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		get_next_line(int fd, char **line)
 		return (_ERROR);
 	read_file_ret = _GO_TO_SPLIT_LINE_WITHOUT_READ;
 	// Check if line feeds already exist in backup[fd].(case1)
-	// Go to the function 'read_file', only if there is no line feed in the backup[fd].
+	// Call the function 'read_file', only if there is no line feed in the backup[fd].
 	if ((idx_to_split = get_idx_to_split(backup[fd])) == _LF_NOT_FOUND)
 		read_file_ret = read_file(fd, &backup[fd], &read_size, &idx_to_split);
 	if (read_file_ret == _ERROR)
