@@ -6,11 +6,11 @@
 /*   By: swshin <swshin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 20:57:47 by sshin             #+#    #+#             */
-/*   Updated: 2021/06/02 00:47:13 by swshin           ###   ########.fr       */
+/*   Updated: 2021/06/02 00:50:02 by swshin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// github RAEDME에 Flow Chart가 있으니 참고하세요~!!
+// 깃헙 리드미에 플로우차트가 있으니 참고하세요~!!
 
 #include "get_next_line.h"
 
@@ -24,8 +24,8 @@ int		get_next_line(int fd, char **line)
 	if (BUFFER_SIZE < 1 || fd < 0 || OPEN_MAX <= fd || !line )
 		return (_ERROR);
 	read_file_ret = _GO_TO_SPLIT_LINE_WITHOUT_READ;
-	// Check if line feeds already exist in backup[fd].(case1)
-	// Call the function 'read_file', only if there is no line feed in the backup[fd].
+	// Check if line feeds already exist in 'backup[fd]'.(case1)
+	// Call the function 'read_file', only if there is no line feed in the 'backup[fd]'.
 	if ((idx_to_split = get_idx_to_split(backup[fd])) == _LF_NOT_FOUND)
 		read_file_ret = read_file(fd, &backup[fd], &read_size, &idx_to_split);
 	if (read_file_ret == _ERROR)
@@ -70,7 +70,7 @@ long	read_file(int fd, char **backup, int *read_size, int *idx_to_split)
 	free(buf);
 	if (*read_size < 0)
 		return (_ERROR);
-	// EOF has been reached.
+	// EOF has been reached.(case2, 3)
 	return (_GO_TO_SPLIT_LINE_WITHOUT_READ);
 }
 
@@ -125,7 +125,7 @@ int		split_line_without_read(char **backup, char **line)
 {
 	int		idx_to_split;
 
-	// Line feeds already exist in backup[fd].(case1)
+	// Line feeds already exist in 'backup[fd]'.(case1)
 	if (*backup && (idx_to_split = get_idx_to_split(*backup)) >= 0)
 		return (split_line(backup, line, idx_to_split));
 	// EOF has been reached.(case2)
