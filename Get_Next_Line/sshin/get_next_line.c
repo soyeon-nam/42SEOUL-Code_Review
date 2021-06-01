@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshin <sshin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: swshin <swshin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 20:57:47 by sshin             #+#    #+#             */
-/*   Updated: 2021/06/01 22:23:06 by sshin            ###   ########.fr       */
+/*   Updated: 2021/06/02 00:47:13 by swshin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ long	read_file(int fd, char **backup, int *read_size, int *idx_to_split)
 	free(buf);
 	if (*read_size < 0)
 		return (_ERROR);
-	// Nothing to read more.(case2, 3)
+	// EOF has been reached.
 	return (_GO_TO_SPLIT_LINE_WITHOUT_READ);
 }
 
@@ -128,14 +128,14 @@ int		split_line_without_read(char **backup, char **line)
 	// Line feeds already exist in backup[fd].(case1)
 	if (*backup && (idx_to_split = get_idx_to_split(*backup)) >= 0)
 		return (split_line(backup, line, idx_to_split));
-	// Nothing to read more. Last line.(case2)
+	// EOF has been reached.(case2)
 	if (*backup)
 	{
 		*line = *backup;
 		*backup = NULL;
 		return (_EOF);
 	}
-	// Nothing to read more.(case3)
+	// EOF has been reached.(case3)
 	*line = ft_strdup("");
 	// if (*line == NULL)
 	// {
