@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jichung <jichung@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sshin <sshin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 11:56:52 by jichung           #+#    #+#             */
-/*   Updated: 2021/05/26 18:34:13 by jichung          ###   ########.fr       */
+/*   Updated: 2021/06/01 21:41:59 by sshin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,12 @@ size_t	ft_strlen(const char *s)
 char	*strallcat(const char *s1, const char *s2)
 {
 	char	*res;
+	// 반환값을 다루는 변수의 이름을 result와 res로 혼용하고 있다. 통일하는것이 가독성에 도움이 될것 같다. -sshin
 	char	*tmp;
 
+	// 세가지 경우에 따라 완전히 다르게 작동하는 사실상 세가지 기능을 하는 함수.
+	// s1이 NULL인 경우 strdup, s2가 NULL인 경우 동적할당 1칸, 둘다 NULL이 아닌 경우 strjoin으로 기능.
+	// 각 함수의 기능은 최대한 독립적으로 제작하는것이 좋음에 위배. -sshin
 	if (!s2)
 		return ((char *)malloc(1));
 	if (!s1)
@@ -41,6 +45,7 @@ char	*strallcat(const char *s1, const char *s2)
 	}
 	if (!(res = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1)))
 		return (NULL);
+
 	tmp = res;
 	while (*s1)
 		*tmp++ = *s1++;
