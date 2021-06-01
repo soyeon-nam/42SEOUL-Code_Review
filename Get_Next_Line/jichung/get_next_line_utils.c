@@ -6,7 +6,7 @@
 /*   By: sshin <sshin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 11:56:52 by jichung           #+#    #+#             */
-/*   Updated: 2021/06/01 22:09:00 by sshin            ###   ########.fr       */
+/*   Updated: 2021/06/01 22:41:30 by sshin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ char	*strallcat(const char *s1, const char *s2)
 	return (res);
 }
 
+// is_nl 함수는 인풋 파라미터 즉 buf가 line feed임을 판단하는 함수는 아니다.
+// 함수명을 is_nl_in, has_nl, exist_nl 등으로 짓는것이 좀더 직관적이지 않을까? -sshin
 size_t	is_nl(const char *buf)
 {
 	size_t flag;
