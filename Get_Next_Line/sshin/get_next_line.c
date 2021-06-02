@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swshin <swshin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sshin <sshin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 20:57:47 by sshin             #+#    #+#             */
-/*   Updated: 2021/06/02 09:02:43 by swshin           ###   ########.fr       */
+/*   Updated: 2021/06/02 12:10:57 by sshin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,18 @@ int		get_next_line(int fd, char **line)
 
 	if (BUFFER_SIZE < 1 || fd < 0 || OPEN_MAX <= fd || !line )
 		return (_ERROR);
-	read_file_ret = _GO_TO_SPLIT_LINE_WITHOUT_READ;
-	// Check if line feeds already exist in 'backup[fd]'.(case1)
+	read_file_ret = _GO_TO_ASSIGN_LAST_LINE;
+	// Check if line feeds already exist in 'backup[fd]'.
 	// Call the function 'read_file', only if there is no line feed in the 'backup[fd]'.
 	if ((idx_to_split = get_idx_to_split(backup[fd])) == _LF_NOT_FOUND)
 		read_file_ret = read_file(fd, &backup[fd], &read_size, &idx_to_split);
+	else
+		return (split_line(&backup[fd], line, idx_to_split));
 	if (read_file_ret == _ERROR)
 		return (_ERROR);
 	if (read_file_ret == _LF_FOUND)
 		return (split_line(&backup[fd], line, idx_to_split));
-	return (split_line_without_read(&backup[fd], line));
+	return (assign_last_line(&backup[fd], line, read_size));
 }
 
 int		read_file(int fd, char **backup, int *read_size, int *idx_to_split)
@@ -68,10 +70,8 @@ int		read_file(int fd, char **backup, int *read_size, int *idx_to_split)
 		}
 	}
 	free(buf);
-	if (*read_size < 0)
-		return (_ERROR);
-	// EOF has been reached.(case2, 3)
-	return (_GO_TO_SPLIT_LINE_WITHOUT_READ);
+	// EOF has been reached.
+	return (_GO_TO_ASSIGN_LAST_LINE);
 }
 
 int		get_idx_to_split(char *backup)
@@ -121,21 +121,16 @@ int		split_line(char **backup, char **line, int idx_to_split)
 	return (_A_LINE);
 }
 
-int		split_line_without_read(char **backup, char **line)
+int		assign_last_line(char **backup, char **line, int read_size)
 {
-	int		idx_to_split;
-
-	// Line feeds already exist in 'backup[fd]'.(case1)
-	if (*backup && (idx_to_split = get_idx_to_split(*backup)) >= 0)
-		return (split_line(backup, line, idx_to_split));
-	// EOF has been reached.(case2)
+	if (read_size < 0)
+		return (_ERROR);
 	if (*backup)
 	{
 		*line = *backup;
 		*backup = NULL;
 		return (_EOF);
 	}
-	// EOF has been reached.(case3)
 	*line = ft_strdup("");
 	// if (*line == NULL)
 	// {
