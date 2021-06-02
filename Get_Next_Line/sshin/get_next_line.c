@@ -6,7 +6,7 @@
 /*   By: swshin <swshin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 20:57:47 by sshin             #+#    #+#             */
-/*   Updated: 2021/06/02 00:50:02 by swshin           ###   ########.fr       */
+/*   Updated: 2021/06/02 09:02:43 by swshin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 int		get_next_line(int fd, char **line)
 {
 	static char		*backup[OPEN_MAX];
-	long			read_file_ret;
+	int				read_file_ret;
 	int				read_size;
 	int				idx_to_split;
 
@@ -35,7 +35,7 @@ int		get_next_line(int fd, char **line)
 	return (split_line_without_read(&backup[fd], line));
 }
 
-long	read_file(int fd, char **backup, int *read_size, int *idx_to_split)
+int		read_file(int fd, char **backup, int *read_size, int *idx_to_split)
 {
 	char	*buf;
 	char	*tmp;

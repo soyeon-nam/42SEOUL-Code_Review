@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshin <sshin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: swshin <swshin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 10:51:12 by sshin             #+#    #+#             */
-/*   Updated: 2021/06/01 14:11:26 by sshin            ###   ########.fr       */
+/*   Updated: 2021/06/02 09:02:40 by swshin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # define _LF_NOT_FOUND -4
 
 int		get_next_line(int fd, char **line);
-long	read_file(int fd, char **backup, int *read_size, int *idx_to_split);
+int		read_file(int fd, char **backup, int *read_size, int *idx_to_split);
 int		get_idx_to_split(char *backup);
 int		split_line(char **backup, char **line, int cut_idx);
 int		split_line_without_read(char **backup, char **line);

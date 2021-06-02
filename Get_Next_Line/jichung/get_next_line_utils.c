@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshin <sshin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: swshin <swshin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 11:56:52 by jichung           #+#    #+#             */
-/*   Updated: 2021/06/01 22:41:30 by sshin            ###   ########.fr       */
+/*   Updated: 2021/06/02 09:04:15 by swshin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ size_t	is_nl(const char *buf)
 	return (flag);
 }
 
+// count도 cnt로 줄일 수 있다. -sshin
 size_t	count_til_nl(const char *buf)
 {
 	size_t count;

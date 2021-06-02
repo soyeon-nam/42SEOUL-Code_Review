@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshin <sshin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: swshin <swshin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 10:08:19 by jichung           #+#    #+#             */
-/*   Updated: 2021/06/01 22:00:12 by sshin            ###   ########.fr       */
+/*   Updated: 2021/06/02 09:03:47 by swshin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,8 @@ static int	nl_in_buf(char **buf, char **line, char **backup)
 	return (result);
 }
 
-// 표준함수를 최대한 활용했으면 좀 더 이해하기 쉬운 코드가 되었을것 같음. - sshin
-// nl_in_backup, nl_in_buf 함수는 함수 내에서 (표준 라이브러리 함수가 아닌) '제작한 함수를 2개 호출'한다.
-// 각 함수의 기능은 최대한 독립적으로 만드는것이 좋다는것에 위배됨. -sshin
+// libft 함수(표준이거나 빈번하게 사용되어 누구나 그 기능을 알고있는 함수)를 최대한 활용했으면
+// 좀 더 이해하기 쉬운 코드가 되었을것 같음. - sshin
 int			get_next_line(int fd, char **line)
 {
 	char		*buf;
