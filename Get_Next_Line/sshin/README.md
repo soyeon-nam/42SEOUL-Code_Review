@@ -3,7 +3,7 @@ Project Introduction:
 https://www.notion.so/GNL-Intro-481136f6d58c4beabfe9f8d52355cec6
 
 Flow Chart:
-![image](https://user-images.githubusercontent.com/83692797/120418813-310a3880-c39c-11eb-8292-436b4614aa1d.png)
+IMG_0429.jpg![IMG_0429](https://user-images.githubusercontent.com/83692797/120493206-b79f3400-c3f5-11eb-9a93-14c2361a0437.jpg)
 
 Code Review:
 
