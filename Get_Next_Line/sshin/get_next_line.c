@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshin <sshin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: swshin <swshin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 20:57:47 by sshin             #+#    #+#             */
-/*   Updated: 2021/06/02 12:10:57 by sshin            ###   ########.fr       */
+/*   Updated: 2021/06/03 01:17:35 by swshin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,22 @@ int		get_next_line(int fd, char **line)
 	if (read_file_ret == _LF_FOUND)
 		return (split_line(&backup[fd], line, idx_to_split));
 	return (assign_last_line(&backup[fd], line, read_size));
+}
+
+int		get_idx_to_split(char *backup)
+{
+	int		idx;
+
+	if (!backup)
+		return (_LF_NOT_FOUND);
+	idx = 0;
+	while (backup[idx])
+	{
+		if (backup[idx] == '\n')
+			return (idx);
+		++idx;
+	}
+	return (_LF_NOT_FOUND);
 }
 
 int		read_file(int fd, char **backup, int *read_size, int *idx_to_split)
@@ -72,22 +88,6 @@ int		read_file(int fd, char **backup, int *read_size, int *idx_to_split)
 	free(buf);
 	// EOF has been reached.
 	return (_GO_TO_ASSIGN_LAST_LINE);
-}
-
-int		get_idx_to_split(char *backup)
-{
-	int		idx;
-
-	if (!backup)
-		return (_LF_NOT_FOUND);
-	idx = 0;
-	while (backup[idx])
-	{
-		if (backup[idx] == '\n')
-			return (idx);
-		++idx;
-	}
-	return (_LF_NOT_FOUND);
 }
 
 int		split_line(char **backup, char **line, int idx_to_split)
