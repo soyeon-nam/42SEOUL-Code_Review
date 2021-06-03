@@ -6,7 +6,7 @@
 /*   By: sshin <sshin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 06:42:38 by snam              #+#    #+#             */
-/*   Updated: 2021/06/03 20:23:03 by sshin            ###   ########.fr       */
+/*   Updated: 2021/06/03 20:35:59 by sshin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,9 +125,10 @@ int			read_file(char **line, char **fd_backup, char **buf, int fd)
 int			get_next_line(int fd, char **line)
 {
 	// 주관이긴 한데 변수 선언을 아래와 같이 변수 사용 순서에 따라 하는것이 가독성에 좋다고 생각함.
+	// static char	*fd_backup[OPEN_MAX];
 	// char			*buf;
-	// int			ret;
-	// static char	*fd_backup[OPEN_MAX]; -sshin
+	// int			ret; -sshin
+
 	static char		*fd_backup[OPEN_MAX];
 	char			*buf;
 	int				ret;
