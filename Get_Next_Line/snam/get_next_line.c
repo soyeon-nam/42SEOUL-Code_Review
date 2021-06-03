@@ -6,13 +6,26 @@
 /*   By: sshin <sshin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 06:42:38 by snam              #+#    #+#             */
-/*   Updated: 2021/06/03 18:20:13 by sshin            ###   ########.fr       */
+/*   Updated: 2021/06/03 20:23:03 by sshin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
+** * concat_old_backup
+** 이전에 버퍼에 저장된 것이 있는지 여부 판단해서 있으면 line에 붙인다.
+** 만약 \n 이나 error 을 만나면 바로 거기서 리턴하고, 나머지 백업에 저장해 둘 것이 있으면 저장. 또는 nullptr로 만들어줌. buf는 전에 할당 받았지만 사용하지 않았으므로 free(buf) 를 해줘야 leaks가 생기지 않는다.
+** * read_file
+** 해당 함수까지 온 경우는 2가지이다.
+** EOF 이거나 이전에 EOF가 아닌 fd_backup의 \0을 만난 경우이다.
+** 만약 EOF인경우, while 문에 진입하지 못하고 바로 밑으로 넘어간다.
+** 그리고 사용 안한 buf를 free해주고,
+*/
+
 #include "get_next_line.h"
+
 // &backup[fd]로 들어온것을 fd_backup으로 선언하는것 좋은것 같다.
-// 나는 char **backup으로 받았는데 fd_backup으로 구분해주는것이 더 좋은듯. -sshin
+// 나는 char **backup으로 받았는데 fd_backup으로 구분해주는것이 더 좋은듯.
+// concat_old_backup 함수는 역할이 모호하다 다른 함수를 호출하는것이 주요 기능인데 굳이 없어도 되는 함수가 아닐까?  -sshin
 int			concat_old_backup(char **fd_backup, char **line, char *buf)
 {
 	int				flag;
@@ -22,7 +35,7 @@ int			concat_old_backup(char **fd_backup, char **line, char *buf)
 		flag = split_str(line, fd_backup);
 		if (flag != 0)
 		{
-			free(buf);
+			free(buf); // <-
 			if (flag == 1)
 				return (1);
 			else if (flag == -1)
@@ -31,17 +44,18 @@ int			concat_old_backup(char **fd_backup, char **line, char *buf)
 	}
 	else
 	{
-		if (!(*line = (char *)malloc(1))) // <- line에 할당할 준비 한칸 만들고 0 넣음
+		if (!(*line = (char *)malloc(1)))
 		{
-			free(buf);
+			free(buf); // <-
 			return (-1);
 		}
 		**line = 0;
 	}
 	return (0);
 }
-
+								// line, fd_backup
 char		*generate_ret_line(char **s1, char **s2)
+// 여러번 사용되는 함수도 아닌데 매개변수명 맞춰주는게 이해하는데 매우매우 도움됨. -sshin
 {
 	char	*ret;
 
@@ -49,9 +63,11 @@ char		*generate_ret_line(char **s1, char **s2)
 		return (0);
 	ret = (char *)malloc(sizeof(char) * (ft_strlen(*s1) + ft_strlen(*s2) + 1));
 	if (!ret)
-		return (0);
+		return (0); // 통일하지 않고 여기만 이렇게한 이유? -sshin
 	ft_strncpy(ret, *s1, ft_strlen(*s1) + 1);
 	ft_strlcat(ret, *s2, ft_strlen(*s1) + ft_strlen(*s2) + 1);
+	// dup, join 함수를 사용하는것이 직접 복사하는 길이를 재지 않아도 되고 매개변수의 개수가 줄어들어
+	// 가독성에 도움됨. -sshin
 	free(*s1);
 	free(*s2);
 	*s2 = 0;
@@ -60,12 +76,13 @@ char		*generate_ret_line(char **s1, char **s2)
 
 int			concat_new_buf(char **line, char **fd_backup, char **buf)
 {
-	int flag_nl;
+	int flag_nl; // 다른 곳에서는 그냥 flag인데 여기만 flag_nl인 이유? -sshin
 
 	flag_nl = split_str(fd_backup, buf);
 	if (flag_nl == -1)
 		return (-1);
 	if (!(*line = generate_ret_line(line, fd_backup)))
+	// call by pointer로 line에 할당하는것 까지 generate_ret_line 함수 안에서 했으면 어떨까
 		return (-1);
 	*fd_backup = *buf;
 	*buf = 0;
@@ -73,7 +90,7 @@ int			concat_new_buf(char **line, char **fd_backup, char **buf)
 		return (0);
 	return (1);
 }
-
+// 이해?
 int			read_file(char **line, char **fd_backup, char **buf, int fd)
 {
 	long			read_size;
@@ -81,8 +98,13 @@ int			read_file(char **line, char **fd_backup, char **buf, int fd)
 
 	while ((read_size = read(fd, *buf, BUFFER_SIZE)) > 0)
 	{
+		// 버퍼를 굳이 gnl 함수 안에서 동적할당하여 가지고 들어올 필요가 있을까?
+		// 괜히 버퍼를 gnl 함수에서 동적할당한 덕분에
+		// 버퍼를 직접적으로 사용하지도 않는 함수 안에서 할당 해제하는것 때문에 코드 복잡해지는것 같음. -sshin
 		(*buf)[read_size] = 0;
 		ret = concat_new_buf(line, &fd_backup[fd], buf);
+									// 이미 read_file 함수로 들어올때 fd번째 원소로 들어왔는데
+									// 굳이 포인터 변수의 fd번째 원소로 작성하는것은 통일성 때문인가? -sshin
 		if (ret == 1)
 			return (1);
 		else if (ret == -1)
