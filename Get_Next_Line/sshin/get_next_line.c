@@ -6,7 +6,7 @@
 /*   By: sshin <sshin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 20:57:47 by sshin             #+#    #+#             */
-/*   Updated: 2021/06/12 18:35:12 by sshin            ###   ########.fr       */
+/*   Updated: 2021/06/12 18:39:59 by sshin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,14 @@ int get_next_line(int fd, char **line)
 		return (split_line(&backup[fd], line, idx_to_split));
 	if (read_file_ret == _ERROR)
 		return (_ERROR);
-	else if (read_file_ret == _GO_TO_ASSIGN_LAST_LINE)
-		return (assign_last_line(&backup[fd], line));
-	else
+	// else if (read_file_ret == _GO_TO_ASSIGN_LAST_LINE)
+	// 	return (assign_last_line(&backup[fd], line));
+	// else
+	// 	return (split_line(&backup[fd], line, idx_to_split));
+	else if (read_file_ret == _LF_FOUND)
 		return (split_line(&backup[fd], line, idx_to_split));
+	else
+		return (assign_last_line(&backup[fd], line));
 }
 
 int get_idx_to_split(char *backup)
@@ -110,9 +114,8 @@ int assign_last_line(char **backup, char **line)
 			return (_ERROR);
 		return (_EOF);
 	}
-		*line = *backup;
-		*backup = NULL;
-		return (_EOF);
-	}
-
+	*line = *backup;
+	*backup = NULL;
+	return (_EOF);
+}
 //전반적으로 아주 잘 작성됨. 코드의 진행이 아주 심플한 점이 특히 인상깊었음. 그런데 노미넷 규정을 free를 중복으로 작성하여 어김으로서 일부 불필요하게 복잡해진 부분이 존재함. 그 이외에는 모두 완벽. -jichung
