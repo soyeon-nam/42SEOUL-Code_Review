@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jichung <jichung@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sshin <sshin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 20:57:47 by sshin             #+#    #+#             */
-/*   Updated: 2021/06/11 01:05:08 by jichung          ###   ########.fr       */
+/*   Updated: 2021/06/12 18:35:12 by sshin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,20 @@ int get_next_line(int fd, char **line)
 {
 	static char *backup[OPEN_MAX];
 	int read_file_ret;
-	int read_size;
 	int idx_to_split;
 
-	if (BUFFER_SIZE < 1 || fd < 0 || OPEN_MAX <= fd || !line)
+	if (BUFFER_SIZE < 1 || fd < 0 || OPEN_MAX <= fd || !line || read(fd, "", 0) == _ERROR)
 		return (_ERROR);
 	// Check if line feeds already exist in 'backup[fd]'.
 	// Call the function 'read_file', only if there is no line feed in the 'backup[fd]'.
 	if ((idx_to_split = get_idx_to_split(backup[fd])) == _LF_NOT_FOUND)
-		read_file_ret = read_file(fd, &backup[fd], &read_size, &idx_to_split);
+		read_file_ret = read_file(fd, &backup[fd], &idx_to_split);
 	else
 		return (split_line(&backup[fd], line, idx_to_split));
 	if (read_file_ret == _ERROR)
 		return (_ERROR);
 	else if (read_file_ret == _GO_TO_ASSIGN_LAST_LINE)
-		return (assign_last_line(&backup[fd], line, read_size));
+		return (assign_last_line(&backup[fd], line));
 	else
 		return (split_line(&backup[fd], line, idx_to_split));
 }
@@ -53,16 +52,17 @@ int get_idx_to_split(char *backup)
 	return (_LF_NOT_FOUND);
 }
 
-int read_file(int fd, char **backup, int *read_size, int *idx_to_split)			//tmp free를 한번으로 가능한데 중복으로 쓰여서 줄이 길어짐. (임의 수정) -jichung
+int read_file(int fd, char **backup, int *idx_to_split)			//tmp free를 한번으로 가능한데 중복으로 쓰여서 줄이 길어짐. (임의 수정) -jichung
 {																																						//0보다 크다는 것보다 _LF_NOT_FOUND가 아닐때가 더 명확하게 이해된다고 생각함. (임의 수정) -jichung
-	char *buf;																																//buf free를 한번으로 가능한데 중복으로 쓰여서 줄이 길어짐. (임의 수정) -jichung
-	char *tmp;
+	char 	*buf;																																//buf free를 한번으로 가능한데 중복으로 쓰여서 줄이 길어짐. (임의 수정) -jichung
+	char 	*tmp;
+	int		read_size;
 
 	if (!(buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
 		return (_ERROR);
-	while ((*read_size = read(fd, buf, BUFFER_SIZE)) > 0)
+	while ((read_size = read(fd, buf, BUFFER_SIZE)) > 0)
 	{
-		buf[*read_size] = '\0';
+		buf[read_size] = '\0';
 		tmp = ft_strjoin(*backup, buf);
 		free(buf);
 		free(*backup);
@@ -99,10 +99,10 @@ int split_line(char **backup, char **line, int idx_to_split)						//if와 else�
 	return (_A_LINE);
 }
 
-int assign_last_line(char **backup, char **line, int read_size)
+int assign_last_line(char **backup, char **line)
 {
-	if (read_size < 0)											//read 함수 결과값의 예외처리가 이 위치에 있는게 상당히 어색함 -jichung
-		return (_ERROR);
+	// if (read_size < 0)											//read 함수 결과값의 예외처리가 이 위치에 있는게 상당히 어색함 -jichung
+	// 	return (_ERROR);
 	if (*backup == NULL)
 	{
 		*line = ft_strdup("");
