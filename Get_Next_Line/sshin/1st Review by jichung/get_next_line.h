@@ -6,7 +6,7 @@
 /*   By: sshin <sshin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 10:51:12 by sshin             #+#    #+#             */
-/*   Updated: 2021/06/02 12:10:59 by sshin            ###   ########.fr       */
+/*   Updated: 2021/06/12 18:34:04 by sshin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@
 # define _LF_NOT_FOUND -4
 
 int		get_next_line(int fd, char **line);
-int		read_file(int fd, char **backup, int *read_size, int *idx_to_split);
+int		read_file(int fd, char **backup, int *idx_to_split);
 int		get_idx_to_split(char *backup);
 int		split_line(char **backup, char **line, int cut_idx);
-int		assign_last_line(char **backup, char **line, int read_size);
+int		assign_last_line(char **backup, char **line);
 
 size_t	ft_strlen(const char *str);
 char	*ft_strdup(const char *str);
