@@ -6,7 +6,7 @@
 /*   By: sshin <sshin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 20:57:47 by sshin             #+#    #+#             */
-/*   Updated: 2021/06/12 18:39:59 by sshin            ###   ########.fr       */
+/*   Updated: 2021/06/12 19:02:23 by sshin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,6 @@ int get_next_line(int fd, char **line)
 		return (split_line(&backup[fd], line, idx_to_split));
 	if (read_file_ret == _ERROR)
 		return (_ERROR);
-	// else if (read_file_ret == _GO_TO_ASSIGN_LAST_LINE)
-	// 	return (assign_last_line(&backup[fd], line));
-	// else
-	// 	return (split_line(&backup[fd], line, idx_to_split));
 	else if (read_file_ret == _LF_FOUND)
 		return (split_line(&backup[fd], line, idx_to_split));
 	else
@@ -56,7 +52,7 @@ int get_idx_to_split(char *backup)
 	return (_LF_NOT_FOUND);
 }
 
-int read_file(int fd, char **backup, int *idx_to_split)			//tmp free를 한번으로 가능한데 중복으로 쓰여서 줄이 길어짐. (임의 수정) -jichung
+int read_file(int fd, char **backup, int *idx_to_split)
 {																																						//0보다 크다는 것보다 _LF_NOT_FOUND가 아닐때가 더 명확하게 이해된다고 생각함. (임의 수정) -jichung
 	char 	*buf;																																//buf free를 한번으로 가능한데 중복으로 쓰여서 줄이 길어짐. (임의 수정) -jichung
 	char 	*tmp;
@@ -67,19 +63,24 @@ int read_file(int fd, char **backup, int *idx_to_split)			//tmp free를 한번�
 	while ((read_size = read(fd, buf, BUFFER_SIZE)) > 0)
 	{
 		buf[read_size] = '\0';
-		tmp = ft_strjoin(*backup, buf);
-		free(buf);
+		if (!(tmp = ft_strjoin(*backup, buf)))
+		{
+			free(buf);
+			return (_ERROR);
+		}
 		free(*backup);
-		if (tmp == NULL)
+		if(!(*backup = ft_strdup(tmp)))
+		{
+			free(buf);
+			free(tmp);
 			return (_ERROR);
-		*backup = ft_strdup(tmp);
+		}
 		free(tmp);
-		if (*backup == NULL)
-			return (_ERROR);
 		if ((*idx_to_split = get_idx_to_split(*backup)) != _LF_NOT_FOUND)
+		{
+			free(buf);
 			return (_LF_FOUND);
-		if (!(buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
-			return (_ERROR);
+		}
 	}
 	// EOF has been reached.
 	free(buf);
