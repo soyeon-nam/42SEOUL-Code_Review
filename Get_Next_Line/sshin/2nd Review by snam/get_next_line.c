@@ -6,7 +6,7 @@
 /*   By: sshin <sshin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 20:57:47 by sshin             #+#    #+#             */
-/*   Updated: 2021/06/12 19:48:12 by sshin            ###   ########.fr       */
+/*   Updated: 2021/06/13 15:55:02 by sshin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	read_file(int fd, char **backup_fd, int *idx_to_split)
 	int		read_size;
 
 	if (!(buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
-		return (_ERROR);
+		// return (_ERROR);
 	while ((read_size = read(fd, buf, BUFFER_SIZE)) > 0)
 	{
 		buf[read_size] = '\0';
@@ -104,12 +104,12 @@ int	split_line(char **backup_fd, char **line, int idx_to_split)
 	return (_A_LINE);
 }
 
-int	assign_last_line(char **backup, char **line)
+int	assign_last_line(char **backup_fd, char **line)
 {
-	if (*backup)
+	if (*backup_fd)
 	{
-		*line = *backup;
-		*backup = NULL;
+		*line = *backup_fd;
+		*backup_fd = NULL;
 		return (_EOF);
 	}
 	if (!(*line = ft_strdup("")))

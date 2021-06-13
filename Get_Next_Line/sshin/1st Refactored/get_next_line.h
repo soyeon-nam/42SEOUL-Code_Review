@@ -6,7 +6,7 @@
 /*   By: sshin <sshin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 10:51:12 by sshin             #+#    #+#             */
-/*   Updated: 2021/06/12 19:48:44 by sshin            ###   ########.fr       */
+/*   Updated: 2021/06/13 15:55:00 by sshin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@
 # define _GO_TO_ASSIGN_LAST_LINE -4
 
 int		get_next_line(int fd, char **line);
-int		read_file(int fd, char **backup, int *idx_to_split);
-int		get_idx_to_split(char *backup);
-int		split_line(char **backup, char **line, int cut_idx);
-int		assign_last_line(char **backup, char **line);
+int		read_file(int fd, char **backup_fd, int *idx_to_split);
+int		get_idx_to_split(char *backup_fd);
+int		split_line(char **backup_fd, char **line, int cut_idx);
+int		assign_last_line(char **backup_fd, char **line);
 
 size_t	ft_strlen(const char *str);
 char	*ft_strdup(const char *str);
