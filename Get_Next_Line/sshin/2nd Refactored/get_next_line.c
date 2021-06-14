@@ -6,13 +6,11 @@
 /*   By: swshin <swshin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 20:57:47 by sshin             #+#    #+#             */
-/*   Updated: 2021/06/15 00:14:16 by swshin           ###   ########.fr       */
+/*   Updated: 2021/06/15 00:17:17 by swshin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-//코드들이 전반적으로 알아보기 쉬움 ^0^b
 
 int	get_next_line(int fd, char **line)
 {
@@ -40,7 +38,6 @@ int	get_idx_to_split(char *backup_fd)
 
 	if (backup_fd == NULL)
 		return (_LF_NOT_FOUND);
-		//전에 리턴 값 변수로 하지말고 숫자로 하라고 본 거 같기도 한데, 정확하지는 않아서 좀 더 찾아보겠습니다.
 	idx = 0;
 	while (backup_fd[idx])
 	{
@@ -68,14 +65,7 @@ int	read_file(int fd, char **backup_fd, int *idx_to_split)
 		// 	return (_ERROR);
 		// }
 		free(*backup_fd);
-
-		if (!(*backup_fd = ft_strdup(tmp))) // *backup_fd = tmp 으로 바꾸면 많은 부분에서 절약될 거 같습니다.
-		// {
-		// 	free(buf);
-		// 	free(tmp);
-		// 	return (_ERROR);
-		// }
-
+		*backup_fd = tmp;
 		free(tmp);
 		if ((*idx_to_split = get_idx_to_split(*backup_fd)) != _LF_NOT_FOUND)
 		{
@@ -85,7 +75,7 @@ int	read_file(int fd, char **backup_fd, int *idx_to_split)
 	}
 	// EOF has been reached.
 	free(buf);
-	return (_GO_TO_ASSIGN_LAST_LINE);
+	return (0);
 }
 
 int	split_line(char **backup_fd, char **line, int idx_to_split)
@@ -98,7 +88,7 @@ int	split_line(char **backup_fd, char **line, int idx_to_split)
 	// 	free(*backup_fd);
 	// 	return (_ERROR);
 	// }
-	tmp = ft_strdup(*backup_fd + idx_to_split + 1); //쪼개어 정리하기가 깔끔합니다.
+	tmp = ft_strdup(*backup_fd + idx_to_split + 1);
 	free(*backup_fd);
 	*backup_fd = tmp;
 	return (_A_LINE);
@@ -112,7 +102,7 @@ int	assign_last_line(char **backup_fd, char **line)
 		*backup_fd = NULL;
 		return (_EOF);
 	}
-	if (!(*line = ft_strdup(""))) //ft_strdup을 이곳저곳 잘 활용하셨네요.
+	if (!(*line = ft_strdup("")))
 	// {
 	// 	free(*backup);
 	// 	return (_ERROR);
