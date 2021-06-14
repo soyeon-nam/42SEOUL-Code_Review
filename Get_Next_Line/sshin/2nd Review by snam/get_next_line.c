@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swshin <swshin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: snam <snam@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 20:57:47 by sshin             #+#    #+#             */
-/*   Updated: 2021/06/14 10:46:11 by swshin           ###   ########.fr       */
+/*   Updated: 2021/06/14 17:26:57 by snam             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+//코드들이 전반적으로 알아보기 쉬움 ^0^b
 
 int	get_next_line(int fd, char **line)
 {
@@ -18,8 +20,7 @@ int	get_next_line(int fd, char **line)
 	int 		idx_to_split;
 	int 		read_file_ret;
 
-	if (BUFFER_SIZE < 1 || fd < 0 || OPEN_MAX <= fd || line == NULL \
-			|| read(fd, "", 0) == _ERROR)
+	if (BUFFER_SIZE < 1 || fd < 0 || OPEN_MAX <= fd || line == NULL || read(fd, "", 0) == _ERROR)
 		return (_ERROR);
 	if ((idx_to_split = get_idx_to_split(backup[fd])) == _LF_NOT_FOUND)
 		read_file_ret = read_file(fd, &backup[fd], &idx_to_split);
@@ -38,7 +39,7 @@ int	get_idx_to_split(char *backup_fd)
 	int idx;
 
 	if (backup_fd == NULL)
-		return (_LF_NOT_FOUND);
+		return (_LF_NOT_FOUND); //전에 리턴 값 변수로 하지말고 숫자로 하라고 본 거 같기도 한데, 정확하지는 않아서 좀 더 찾아보겠습니다.
 	idx = 0;
 	while (backup_fd[idx])
 	{
@@ -60,18 +61,20 @@ int	read_file(int fd, char **backup_fd, int *idx_to_split)
 	while ((read_size = read(fd, buf, BUFFER_SIZE)) > 0)
 	{
 		buf[read_size] = '\0';
-		if (!(tmp = ft_strjoin(*backup_fd, buf)))
+		if (!(tmp = ft_strjoin(*backup_fd, buf))) 
 		// {
 		// 	free(buf);
 		// 	return (_ERROR);
 		// }
 		free(*backup_fd);
-		if (!(*backup_fd = ft_strdup(tmp)))
+		
+		if (!(*backup_fd = ft_strdup(tmp)))  // *backup_fd = tmp 으로 바꾸면 많은 부분에서 절약될 거 같습니다.
 		// {
 		// 	free(buf);
 		// 	free(tmp);
 		// 	return (_ERROR);
 		// }
+		
 		free(tmp);
 		if ((*idx_to_split = get_idx_to_split(*backup_fd)) != _LF_NOT_FOUND)
 		{
@@ -94,7 +97,7 @@ int	split_line(char **backup_fd, char **line, int idx_to_split)
 	// 	free(*backup_fd);
 	// 	return (_ERROR);
 	// }
-	tmp = ft_strdup(*backup_fd + idx_to_split + 1);
+	tmp = ft_strdup(*backup_fd + idx_to_split + 1); //쪼개어 정리하기가 깔끔합니다.
 	free(*backup_fd);
 	*backup_fd = tmp;
 	return (_A_LINE);
@@ -108,7 +111,7 @@ int	assign_last_line(char **backup_fd, char **line)
 		*backup_fd = NULL;
 		return (_EOF);
 	}
-	if (!(*line = ft_strdup("")))
+	if (!(*line = ft_strdup(""))) //ft_strdup을 이곳저곳 잘 활용하셨네요.
 	// {
 	// 	free(*backup);
 	// 	return (_ERROR);
