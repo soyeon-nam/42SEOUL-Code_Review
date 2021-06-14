@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshin <sshin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: swshin <swshin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 20:57:47 by sshin             #+#    #+#             */
-/*   Updated: 2021/06/13 15:55:02 by sshin            ###   ########.fr       */
+/*   Updated: 2021/06/14 10:46:11 by swshin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ int	get_next_line(int fd, char **line)
 	if (BUFFER_SIZE < 1 || fd < 0 || OPEN_MAX <= fd || line == NULL \
 			|| read(fd, "", 0) == _ERROR)
 		return (_ERROR);
-	// Check if line feeds already exist in the 'backup[fd]'.
-	// Call the function 'read_file', only if there is no line feed in the 'backup[fd]'.
 	if ((idx_to_split = get_idx_to_split(backup[fd])) == _LF_NOT_FOUND)
 		read_file_ret = read_file(fd, &backup[fd], &idx_to_split);
 	else
@@ -39,8 +37,6 @@ int	get_idx_to_split(char *backup_fd)
 {
 	int idx;
 
-	// When the 'get_next_line' function is called for the first time,
-	// the static variable 'backup' is initialized to NULL.
 	if (backup_fd == NULL)
 		return (_LF_NOT_FOUND);
 	idx = 0;
