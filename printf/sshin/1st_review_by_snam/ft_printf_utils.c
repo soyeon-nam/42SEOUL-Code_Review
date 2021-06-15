@@ -6,13 +6,13 @@
 /*   By: sshin <sshin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 23:44:18 by swshin            #+#    #+#             */
-/*   Updated: 2021/06/14 22:21:34 by sshin            ###   ########.fr       */
+/*   Updated: 2021/06/15 12:54:57 by sshin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	init_info(t_info *info)
+void	init_opt_info(t_info *info)
 {
 	info->minus = _OFF;
 	info->zero = _OFF;

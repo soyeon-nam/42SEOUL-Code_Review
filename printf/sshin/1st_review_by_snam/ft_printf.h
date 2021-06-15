@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swshin <swshin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sshin <sshin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 10:52:08 by sshin             #+#    #+#             */
-/*   Updated: 2021/06/15 00:26:56 by swshin           ###   ########.fr       */
+/*   Updated: 2021/06/15 12:52:36 by sshin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@
 # include <unistd.h>
 # include "./libft/libft.h"
 
-# define _TYPE			"cspdiuxX%"
+# define _TYPE		"cspdiuxX%"
 
-# define _ERROR			0
-# define _STDOUT		1
+# define _ERROR		0
+# define _STDOUT	1
 
-# define _ON			1
-# define _OFF			0
+# define _ON		1
+# define _OFF		0
 
 typedef struct	s_info
 {
@@ -69,7 +69,7 @@ int				print_nbr_by_type(size_t nbr, t_info info);
 /*
 ** ========== ft_printf_utils.c ==========
 */
-void			init_info(t_info *info);
+void			init_opt_info(t_info *info);
 int				get_sign(size_t *nbr, char type);
 int				get_base(char type);
 char			*get_baseset(char type);

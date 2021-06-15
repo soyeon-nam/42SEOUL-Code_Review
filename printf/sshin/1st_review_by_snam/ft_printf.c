@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swshin <swshin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sshin <sshin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 10:52:05 by sshin             #+#    #+#             */
-/*   Updated: 2021/06/15 00:49:12 by swshin           ###   ########.fr       */
+/*   Updated: 2021/06/15 12:54:39 by sshin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,14 @@ int		ft_printf(const char *fmt, ...)
 
 void	parse_fmt(const char **fmt, va_list ap, t_info *info)
 {
-	init_info(info);
+	init_opt_info(info);
 	while (ft_strchr(_TYPE, **fmt) == NULL)
 	{
 		get_opt_info(**fmt, ap, info);
 		++(*fmt);
 	}
+	if ((info->minus == _ON || info->prec > -1))
+		info->zero = _OFF;
 	info->type = **fmt;
 }
 
@@ -62,8 +64,6 @@ void	get_opt_info(const char fmt, va_list ap, t_info *info)
 		get_digit_info(fmt, info);
 	else if (fmt == '*')
 		get_aster_info(ap, info);
-	if ((info->minus == _ON || info->prec > -1))
-		info->zero = _OFF;
 }
 
 void	get_digit_info(const char fmt, t_info *info)
