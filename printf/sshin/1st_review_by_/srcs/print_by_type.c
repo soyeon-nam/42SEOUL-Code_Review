@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_by_type.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshin <sshin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: swshin <swshin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 13:08:48 by sshin             #+#    #+#             */
-/*   Updated: 2021/06/15 12:51:49 by sshin            ###   ########.fr       */
+/*   Updated: 2021/06/15 23:02:33 by swshin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,18 @@
 
 int		print_by_type(va_list ap, t_info *info)
 {
-	int		ret;
-
-	ret = 0;
 	if (info->type == 'c')
-		ret = print_char(va_arg(ap, int), *info);
+		return (print_char(va_arg(ap, int), *info));
 	else if (info->type == 's')
-		ret = print_str(va_arg(ap, char *), *info);
+		return (print_str(va_arg(ap, char *), *info));
 	else if (info->type == 'p')
-		ret = print_nbr(va_arg(ap, unsigned long), info);
+		return (print_nbr(va_arg(ap, unsigned long), info));
 	else if (info->type == 'd' || info->type == 'i')
-		ret = print_nbr(va_arg(ap, int), info);
+		return (print_nbr(va_arg(ap, int), info));
 	else if (info->type == 'u' || info->type == 'x' || info->type == 'X')
-		ret = print_nbr(va_arg(ap, unsigned int), info);
-	else if (info->type == '%')
-		ret = print_char('%', *info);
-	return (ret);
+		return (print_nbr(va_arg(ap, unsigned int), info));
+	else // info->type == '%'
+		return (print_char('%', *info));
 }
 
 int		print_char(char c, t_info info)

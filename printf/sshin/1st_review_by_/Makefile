@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sshin <sshin@student.42.fr>                +#+  +:+       +#+         #
+#    By: swshin <swshin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/09 11:22:40 by sshin             #+#    #+#              #
-#    Updated: 2021/06/15 19:02:34 by sshin            ###   ########.fr        #
+#    Updated: 2021/06/15 23:00:08 by swshin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,8 +27,8 @@ SRCS		= $(addprefix $(SRCS_DIR), $(SRCS_LST))
 
 OBJS		= $(SRCS:.c=.o)
 
-LIBFT_LIB	= libft.a
 LIBFT_DIR	= ./libft
+LIBFT_LIB	= libft.a
 
 all: $(NAME)
 
