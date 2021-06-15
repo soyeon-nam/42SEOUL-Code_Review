@@ -6,41 +6,48 @@
 #    By: sshin <sshin@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/09 11:22:40 by sshin             #+#    #+#              #
-#    Updated: 2021/06/13 16:08:15 by sshin            ###   ########.fr        #
+#    Updated: 2021/06/15 19:02:34 by sshin            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
+AR = ar -rcs
+RM = rm -f
 
-HEADER = ft_printf.h
+INCS		= ./incs
 
-SRCS		= ./ft_printf.c \
-				./print_by_type.c \
-				./print_nbr.c \
-				./ft_printf_utils.c \
+SRCS_DIR	= ./srcs/
+SRCS_LST	= ft_printf.c \
+				print_by_type.c \
+				print_nbr.c \
+				ft_printf_utils.c
+SRCS		= $(addprefix $(SRCS_DIR), $(SRCS_LST))
 
 OBJS		= $(SRCS:.c=.o)
 
-all : $(NAME)
+LIBFT_LIB	= libft.a
+LIBFT_DIR	= ./libft
 
-%.o: %.c $(HEADER)
-	$(CC) $(CFLAGS) -c $< -o $@
+all: $(NAME)
 
-$(NAME) : $(OBJS)
-	make all -C libft/
-	cp ./libft/libft.a $@
-	ar -rcs $@ $^
+%.o: %.c
+	$(CC) $(CFLAGS) -I $(INCS) -c $< -o $@
 
-clean :
-	rm -f $(OBJS)
-	make clean -C ./libft
+$(NAME): $(OBJS)
+	make all -C $(LIBFT_DIR)
+	cp $(LIBFT_DIR)/$(LIBFT_LIB) $@
+	$(AR) $@ $^
 
-fclean : clean
-	rm -rf $(NAME)
-	make fclean -C ./libft
+clean:
+	$(RM) $(OBJS)
+	make clean -C $(LIBFT_DIR)
 
-re : fclean all
+fclean: clean
+	$(RM) $(NAME)
+	make fclean -C $(LIBFT_DIR)
+
+re: fclean all
 
 .PHONY: all clean fclean re
