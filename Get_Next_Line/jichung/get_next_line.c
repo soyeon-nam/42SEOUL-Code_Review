@@ -6,20 +6,17 @@
 /*   By: swshin <swshin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 10:08:19 by jichung           #+#    #+#             */
-/*   Updated: 2021/06/02 09:03:47 by swshin           ###   ########.fr       */
+/*   Updated: 2021/06/17 00:48:25 by swshin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-// 취향의 영역이긴 하지만, 함수명은 동사로 작성하는것이 좋다는것이 일반론임. -sshin
+// 함수명은 인반적으로 동사로 작성하는것이 좋다. -sshin
 static int	nl_in_backup(char **line, char **backup)
 {
 	char	**strs;
 	int		result;
-	// 변수를 사용 순서에 따라 아래와 같이 배치하는것이 좋을것 같다.
-	// char	**strs;
-	// int	result;  -sshin
 
 	result = 1;
 	strs = split_by_nl(*backup);
@@ -94,10 +91,6 @@ int			get_next_line(int fd, char **line)
 	char		*buf;
 	static char	*backup[256];
 	int			result;
-	// 변수의 선언은 사용 순서에 따라
-	// static char *backup[256]
-	// char *buf;
-	// int result; 순으로 배치하는것이 좋을것 같음. -sshin
 
 	if (BUFFER_SIZE < 1 || fd < 0 || fd > 255 || !line)
 		return (-1);

@@ -3,23 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sshin <sshin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: swshin <swshin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 06:42:38 by snam              #+#    #+#             */
-/*   Updated: 2021/06/03 20:35:59 by sshin            ###   ########.fr       */
+/*   Updated: 2021/06/17 00:47:30 by swshin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
-** * concat_old_backup
-** 이전에 버퍼에 저장된 것이 있는지 여부 판단해서 있으면 line에 붙인다.
-** 만약 \n 이나 error 을 만나면 바로 거기서 리턴하고, 나머지 백업에 저장해 둘 것이 있으면 저장. 또는 nullptr로 만들어줌. buf는 전에 할당 받았지만 사용하지 않았으므로 free(buf) 를 해줘야 leaks가 생기지 않는다.
-** * read_file
-** 해당 함수까지 온 경우는 2가지이다.
-** EOF 이거나 이전에 EOF가 아닌 fd_backup의 \0을 만난 경우이다.
-** 만약 EOF인경우, while 문에 진입하지 못하고 바로 밑으로 넘어간다.
-** 그리고 사용 안한 buf를 free해주고,
-*/
 
 #include "get_next_line.h"
 
@@ -124,11 +113,6 @@ int			read_file(char **line, char **fd_backup, char **buf, int fd)
 // generate_ret_line 순으로 배치하는것이 좋지 않았을까. -sshin
 int			get_next_line(int fd, char **line)
 {
-	// 주관이긴 한데 변수 선언을 아래와 같이 변수 사용 순서에 따라 하는것이 가독성에 좋다고 생각함.
-	// static char	*fd_backup[OPEN_MAX];
-	// char			*buf;
-	// int			ret; -sshin
-
 	static char		*fd_backup[OPEN_MAX];
 	char			*buf;
 	int				ret;
