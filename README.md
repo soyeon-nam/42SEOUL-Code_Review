@@ -21,6 +21,18 @@ sshin -> jichung 21.06.01
 sshin -> snam 21.06.04
 
 ## printf
+jichung ->
+
+jichung ->
+
+jiwkim ->
+
+jiwkim ->
+
 snam -> sshin
 
+snam ->
+
 sshin -> snam
+
+sshin ->
