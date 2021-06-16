@@ -10,14 +10,18 @@
 ## Review Logs
 ### Get_Next_Line
 jichung -> snam 21.06.04
+
 jichung -> sshin 21.06.04
 
+
 snam -> jihcung
+
 snam -> sshin 21.06.15
 
-sshin -> jichung 21.06.01
-sshin -> snam 21.06.04
 
+sshin -> jichung 21.06.01
+
+sshin -> snam 21.06.04
 ### printf
 snam -> sshin
 
