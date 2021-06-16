@@ -7,8 +7,7 @@
 3. 설명이 필요한 부분은 설명을 요청하고, 부족한 부분을 피드백 한다.
 4. 피드백을 바탕으로 각자의 코드를 개선한다.
 
-## Review Logs
-### Get_Next_Line
+## Get_Next_Line
 jichung -> snam 21.06.04
 
 jichung -> sshin 21.06.04
@@ -20,7 +19,8 @@ snam -> sshin 21.06.15
 sshin -> jichung 21.06.01
 
 sshin -> snam 21.06.04
-### printf
+
+## printf
 snam -> sshin
 
 sshin -> snam
