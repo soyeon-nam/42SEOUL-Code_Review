@@ -12,9 +12,9 @@ jichung -> snam 21.06.04
 
 jichung -> sshin 21.06.04
 
-snam -> jihcung
-
 snam -> sshin 21.06.15
+
+snam -> jihcung
 
 sshin -> jichung 21.06.01
 
