@@ -10,7 +10,7 @@
 ## Get_Next_Line
 jichung -> snam 21.06.04
 
-jichung -> sshin 21.06.04
+jichung -> sshin 21.06.11
 
 snam -> sshin 21.06.15
 
