@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_by_type.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swshin <swshin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sshin <sshin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 13:08:48 by sshin             #+#    #+#             */
-/*   Updated: 2021/06/15 23:02:33 by swshin           ###   ########.fr       */
+/*   Updated: 2021/06/17 17:03:33 by sshin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int		print_char(char c, t_info info)
 
 	len_to_print_padding = info.width - 1;
 	ret = 0;
-	if (info.minus == _ON)
+	if (info.minus == true)
 	{
 		ret += write(_STDOUT, &c, 1);
 		ret += print_padding(info, len_to_print_padding);
@@ -53,7 +53,7 @@ int		print_padding(t_info info, int len_to_print_padding)
 	char	padding;
 	int		ret;
 
-	padding = (info.zero == _ON && info.type != 's') ? '0' : ' ';
+	padding = (info.zero == true && info.type != 's') ? '0' : ' ';
 	ret = 0;
 	while (len_to_print_padding > 0)
 	{
@@ -77,7 +77,7 @@ int		print_str(char *str, t_info info)
 		len_to_print_str = info.prec;
 	len_to_print_padding = info.width - len_to_print_str;
 	ret = 0;
-	if (info.minus == _ON)
+	if (info.minus == true)
 	{
 		ret += print_str_by_prec(str, len_to_print_str);
 		ret += print_padding(info, len_to_print_padding);

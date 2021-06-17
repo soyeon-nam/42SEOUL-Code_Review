@@ -6,7 +6,7 @@
 /*   By: sshin <sshin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 23:44:18 by swshin            #+#    #+#             */
-/*   Updated: 2021/06/15 12:54:57 by sshin            ###   ########.fr       */
+/*   Updated: 2021/06/17 17:03:32 by sshin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	init_opt_info(t_info *info)
 {
-	info->minus = _OFF;
-	info->zero = _OFF;
+	info->minus = false;
+	info->zero = false;
 	info->width = 0;
 	info->prec = -1;
 }

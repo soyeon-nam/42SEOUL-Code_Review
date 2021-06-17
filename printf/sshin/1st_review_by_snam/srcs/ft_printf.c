@@ -6,7 +6,7 @@
 /*   By: sshin <sshin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 10:52:05 by sshin             #+#    #+#             */
-/*   Updated: 2021/06/15 12:54:39 by sshin            ###   ########.fr       */
+/*   Updated: 2021/06/17 17:03:32 by sshin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,23 +41,26 @@ int		ft_printf(const char *fmt, ...)
 
 void	parse_fmt(const char **fmt, va_list ap, t_info *info)
 {
+	char *type;
+
 	init_opt_info(info);
-	while (ft_strchr(_TYPE, **fmt) == NULL)
+	type = "cspdiuxX%";
+	while (ft_strchr(type, **fmt) == NULL)
 	{
 		get_opt_info(**fmt, ap, info);
 		++(*fmt);
 	}
-	if ((info->minus == _ON || info->prec > -1))
-		info->zero = _OFF;
+	if ((info->minus == true || info->prec > -1))
+		info->zero = false;
 	info->type = **fmt;
 }
 
 void	get_opt_info(const char fmt, va_list ap, t_info *info)
 {
 	if (fmt == '0' && info->width == 0 && info->prec == -1)
-		info->zero = _ON;
+		info->zero = true;
 	else if (fmt == '-' && info->prec == -1)
-		info->minus = _ON;
+		info->minus = true;
 	else if (fmt == '.')
 		info->prec = 0;
 	else if (ft_isdigit(fmt))
@@ -81,7 +84,7 @@ void	get_aster_info(va_list ap, t_info *info)
 		info->width = va_arg(ap, int);
 		if (info->width < 0)
 		{
-			info->minus = _ON;
+			info->minus = true;
 			info->width *= -1;
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: sshin <sshin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/11 10:10:34 by sshin             #+#    #+#             */
-/*   Updated: 2021/06/15 12:54:50 by sshin            ###   ########.fr       */
+/*   Updated: 2021/06/17 17:03:33 by sshin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ int		print_nbr(size_t nbr, t_info *info)
 	else if (info->type == 'p')
 		len_to_print_padding -= 2;
 	ret = 0;
-	if (info->sign < 0 && info->zero == _ON)
+	if (info->sign < 0 && info->zero == true)
 		ret += write(_STDOUT, "-", 1);
-	if (info->minus == _ON)
+	if (info->minus == true)
 	{
 		ret += print_nbr_by_prec(nbr, *info, len_to_print_nbr);
 		ret += print_padding(*info, len_to_print_padding);
@@ -61,7 +61,7 @@ int		print_nbr_by_prec(size_t nbr, t_info info, int len_to_print_nbr)
 	int		ret;
 
 	ret = 0;
-	if (info.sign < 0 && info.zero == _OFF)
+	if (info.sign < 0 && info.zero == false)
 		ret += write(_STDOUT, "-", 1);
 	ret += print_zero_by_prec(info, len_to_print_nbr);
 	if (info.type == 'p')

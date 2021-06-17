@@ -6,7 +6,7 @@
 /*   By: sshin <sshin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 10:52:08 by sshin             #+#    #+#             */
-/*   Updated: 2021/06/15 18:40:17 by sshin            ###   ########.fr       */
+/*   Updated: 2021/06/17 17:03:36 by sshin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,16 @@
 # include <stdarg.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdbool.h>
 # include "../libft/libft.h"
-
-# define _TYPE		"cspdiuxX%"
 
 # define _ERROR		0
 # define _STDOUT	1
 
-# define _ON		1
-# define _OFF		0
-
 typedef struct	s_info
 {
-	int		minus;
-	int		zero;
+	bool	minus;
+	bool	zero;
 	int		width;
 	int		prec;
 	char	type;
