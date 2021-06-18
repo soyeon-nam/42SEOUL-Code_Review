@@ -8,29 +8,21 @@
 4. 피드백을 바탕으로 각자의 코드를 리팩토링 한다.
 
 ## Get_Next_Line
-jichung -> snam 21.06.04
-
-jichung -> sshin 21.06.11
-
-snam -> sshin 21.06.15
-
-sshin -> jichung 21.06.01
-
-sshin -> snam 21.06.04
+|---|:---:|---:|
+| Reviewer | Reviewee | Date |
+| jichung | snam | 21.06.04 |
+| jichung | sshin | 21.06.11 |
+| snam | sshin | 21.06.15 |
+| sshin | jichung | 21.06.01 |
+| sshin | snam | 21.06.04 |<br>
 
 ## printf
-jichung ->
-
-jichung ->
-
-jiwkim ->
-
-jiwkim ->
-
-snam -> sshin
-
-snam ->
-
-sshin -> snam
-
-sshin ->
+| Reviewer | Reviewee | Date |
+| jichung |  |  |
+| jichung |  |  |
+| jiwkim |  |  |
+| jiwkim |  |  |
+| snam | sshin |  |
+| snam |  |  |
+| sshin | snam |  |
+| sshin |  |  |<br>
