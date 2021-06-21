@@ -6,7 +6,7 @@
 /*   By: sshin <sshin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/11 10:10:34 by sshin             #+#    #+#             */
-/*   Updated: 2021/06/17 17:03:33 by sshin            ###   ########.fr       */
+/*   Updated: 2021/06/21 21:13:19 by sshin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int		print_nbr_by_type(size_t nbr, t_info info)
 	buf[info.nbrlen] = '\0';
 	nbr_backup = nbr;
 	baseset = get_baseset(info.type);
-	while (info.nbrlen >= 1)
+	while (info.nbrlen > 0)
 	{
 		buf[info.nbrlen - 1] = baseset[nbr % info.base];
 		nbr /= info.base;

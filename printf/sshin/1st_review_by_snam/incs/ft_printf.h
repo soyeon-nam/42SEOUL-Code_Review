@@ -6,7 +6,7 @@
 /*   By: sshin <sshin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 10:52:08 by sshin             #+#    #+#             */
-/*   Updated: 2021/06/17 17:03:36 by sshin            ###   ########.fr       */
+/*   Updated: 2021/06/21 21:13:23 by sshin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ typedef struct	s_info
 ** ========== ft_printf.c ==========
 */
 int				ft_printf(const char *fmt, ...);
-int				print_general_str(const char **fmt);
 void			parse_fmt(const char **fmt, va_list ap, t_info *info);
 void			get_opt_info(const char fmt, va_list ap, t_info *info);
 void			get_digit_info(const char fmt, t_info *info);
