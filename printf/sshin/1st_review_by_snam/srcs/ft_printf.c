@@ -6,7 +6,7 @@
 /*   By: sshin <sshin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 10:52:05 by sshin             #+#    #+#             */
-/*   Updated: 2021/06/17 17:03:32 by sshin            ###   ########.fr       */
+/*   Updated: 2021/06/22 14:23:56 by sshin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int		ft_printf(const char *fmt, ...)
 
 void	parse_fmt(const char **fmt, va_list ap, t_info *info)
 {
-	char *type;
+	const char *type;
 
 	init_opt_info(info);
 	type = "cspdiuxX%";
