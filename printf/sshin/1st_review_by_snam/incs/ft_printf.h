@@ -6,7 +6,7 @@
 /*   By: sshin <sshin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 10:52:08 by sshin             #+#    #+#             */
-/*   Updated: 2021/06/21 21:13:23 by sshin            ###   ########.fr       */
+/*   Updated: 2021/06/23 17:13:38 by sshin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ void			get_aster_info(va_list ap, t_info *info);
 ** ========== print_by_type.c ==========
 */
 int				print_by_type(va_list ap, t_info *info);
-int				print_char(char c, t_info info);
-int				print_padding(t_info info, int len_to_print_padding);
-int				print_str(char *str, t_info info);
+int				print_char(char c, t_info *info);
+int				print_padding(t_info *info, int len_to_print_padding);
+int				print_str(char *str, t_info *info);
 int				print_str_by_prec(char *str, int len_to_print_va);
 
 /*
@@ -57,9 +57,9 @@ int				print_str_by_prec(char *str, int len_to_print_va);
 */
 void			get_nbr_info(size_t *nbr, t_info *info);
 int				print_nbr(size_t nbr, t_info *info);
-int				print_nbr_by_prec(size_t nbr, t_info info, int len_to_print_nbr);
-int				print_zero_by_prec(t_info info, int len_to_print_nbr);
-int				print_nbr_by_type(size_t nbr, t_info info);
+int				print_nbr_by_prec(size_t nbr, t_info *info, int len_to_print_nbr);
+int				print_zero_by_prec(t_info *info, int len_to_print_nbr);
+int				print_nbr_by_type(size_t nbr, t_info *info);
 
 /*
 ** ========== ft_printf_utils.c ==========

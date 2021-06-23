@@ -6,7 +6,7 @@
 /*   By: sshin <sshin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 10:52:05 by sshin             #+#    #+#             */
-/*   Updated: 2021/06/22 14:23:56 by sshin            ###   ########.fr       */
+/*   Updated: 2021/06/23 17:13:40 by sshin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int		ft_printf(const char *fmt, ...)
 {
-	t_info		info;
 	va_list		ap;
 	int			ret;
+	t_info		info;
 
 	va_start(ap, fmt);
 	ret = 0;

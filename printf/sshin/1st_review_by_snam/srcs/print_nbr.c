@@ -6,7 +6,7 @@
 /*   By: sshin <sshin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/11 10:10:34 by sshin             #+#    #+#             */
-/*   Updated: 2021/06/21 21:13:19 by sshin            ###   ########.fr       */
+/*   Updated: 2021/06/23 17:13:46 by sshin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,33 +38,33 @@ int		print_nbr(size_t nbr, t_info *info)
 		ret += write(_STDOUT, "-", 1);
 	if (info->minus == true)
 	{
-		ret += print_nbr_by_prec(nbr, *info, len_to_print_nbr);
-		ret += print_padding(*info, len_to_print_padding);
+		ret += print_nbr_by_prec(nbr, info, len_to_print_nbr);
+		ret += print_padding(info, len_to_print_padding);
 	}
 	else
 	{
-		ret += print_padding(*info, len_to_print_padding);
-		ret += print_nbr_by_prec(nbr, *info, len_to_print_nbr);
+		ret += print_padding(info, len_to_print_padding);
+		ret += print_nbr_by_prec(nbr, info, len_to_print_nbr);
 	}
 	return (ret);
 }
 
-void	get_nbr_info(size_t *nbr, t_info *info)
+inline void	get_nbr_info(size_t *nbr, t_info *info)
 {
 	info->sign = get_sign(nbr, info->type);
 	info->base = get_base(info->type);
 	info->nbrlen = get_nbrlen(*nbr, info->base);
 }
 
-int		print_nbr_by_prec(size_t nbr, t_info info, int len_to_print_nbr)
+int		print_nbr_by_prec(size_t nbr, t_info *info, int len_to_print_nbr)
 {
 	int		ret;
 
 	ret = 0;
-	if (info.sign < 0 && info.zero == false)
+	if (info->sign < 0 && info->zero == false)
 		ret += write(_STDOUT, "-", 1);
 	ret += print_zero_by_prec(info, len_to_print_nbr);
-	if (info.type == 'p')
+	if (info->type == 'p')
 		ret += write(_STDOUT, "0x", 2);
 	ret += print_nbr_by_type(nbr, info);
 	return (ret);
@@ -72,12 +72,12 @@ int		print_nbr_by_prec(size_t nbr, t_info info, int len_to_print_nbr)
 
 // print_zero_by_prec 함수의 역할에 대한 설명:
 // 정밀도에 의해 추가적으로 '0' 패딩이 필요한 경우 즉, prec >= nbrlen인 경우 '0'을 추가로 패딩한다.
-int		print_zero_by_prec(t_info info, int len_to_print_nbr)
+int		print_zero_by_prec(t_info *info, int len_to_print_nbr)
 {
 	int		len_to_print_zero;
 	int		ret;
 
-	len_to_print_zero = len_to_print_nbr - info.nbrlen;
+	len_to_print_zero = len_to_print_nbr - info->nbrlen;
 	ret = 0;
 	while (len_to_print_zero > 0)
 	{
@@ -87,26 +87,26 @@ int		print_zero_by_prec(t_info info, int len_to_print_nbr)
 	return (ret);
 }
 
-int		print_nbr_by_type(size_t nbr, t_info info)
+int		print_nbr_by_type(size_t nbr, t_info *info)
 {
 	char		*buf;
 	char		*baseset;
 	size_t		nbr_backup;
 	int			ret;
 
-	if (!(buf = (char *)malloc(sizeof(char) * (info.nbrlen + 1))))
+	if (!(buf = (char *)malloc(sizeof(char) * (info->nbrlen + 1))))
 		return (_ERROR);
-	buf[info.nbrlen] = '\0';
+	buf[info->nbrlen] = '\0';
 	nbr_backup = nbr;
-	baseset = get_baseset(info.type);
-	while (info.nbrlen > 0)
+	baseset = get_baseset(info->type);
+	while (info->nbrlen > 0)
 	{
-		buf[info.nbrlen - 1] = baseset[nbr % info.base];
-		nbr /= info.base;
-		--(info.nbrlen);
+		buf[info->nbrlen - 1] = baseset[nbr % info->base];
+		nbr /= info->base;
+		--(info->nbrlen);
 	}
 	ret = 0;
-	if (!(nbr_backup == 0 && info.prec == 0))
+	if (!(nbr_backup == 0 && info->prec == 0))
 	{
 		ft_putstr_fd(buf, _STDOUT);
 		ret += ft_strlen(buf);

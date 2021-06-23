@@ -6,7 +6,7 @@
 /*   By: sshin <sshin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 13:08:48 by sshin             #+#    #+#             */
-/*   Updated: 2021/06/17 17:03:33 by sshin            ###   ########.fr       */
+/*   Updated: 2021/06/23 17:13:42 by sshin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 int		print_by_type(va_list ap, t_info *info)
 {
 	if (info->type == 'c')
-		return (print_char(va_arg(ap, int), *info));
+		return (print_char(va_arg(ap, int), info));
 	else if (info->type == 's')
-		return (print_str(va_arg(ap, char *), *info));
+		return (print_str(va_arg(ap, char *), info));
 	else if (info->type == 'p')
 		return (print_nbr(va_arg(ap, unsigned long), info));
 	else if (info->type == 'd' || info->type == 'i')
@@ -25,17 +25,17 @@ int		print_by_type(va_list ap, t_info *info)
 	else if (info->type == 'u' || info->type == 'x' || info->type == 'X')
 		return (print_nbr(va_arg(ap, unsigned int), info));
 	else // info->type == '%'
-		return (print_char('%', *info));
+		return (print_char('%', info));
 }
 
-int		print_char(char c, t_info info)
+int		print_char(char c, t_info *info)
 {
 	int		len_to_print_padding;
 	int		ret;
 
-	len_to_print_padding = info.width - 1;
+	len_to_print_padding = info->width - 1;
 	ret = 0;
-	if (info.minus == true)
+	if (info->minus == true)
 	{
 		ret += write(_STDOUT, &c, 1);
 		ret += print_padding(info, len_to_print_padding);
@@ -48,12 +48,12 @@ int		print_char(char c, t_info info)
 	return (ret);
 }
 
-int		print_padding(t_info info, int len_to_print_padding)
+int		print_padding(t_info *info, int len_to_print_padding)
 {
 	char	padding;
 	int		ret;
 
-	padding = (info.zero == true && info.type != 's') ? '0' : ' ';
+	padding = (info->zero == true && info->type != 's') ? '0' : ' ';
 	ret = 0;
 	while (len_to_print_padding > 0)
 	{
@@ -63,7 +63,7 @@ int		print_padding(t_info info, int len_to_print_padding)
 	return (ret);
 }
 
-int		print_str(char *str, t_info info)
+int		print_str(char *str, t_info *info)
 {
 	int		len_to_print_str;
 	int		len_to_print_padding;
@@ -71,13 +71,13 @@ int		print_str(char *str, t_info info)
 
 	if (str == NULL)
 		str = "(null)";
-	if (info.prec == -1 || (size_t)info.prec > ft_strlen(str))
+	if (info->prec == -1 || (size_t)info->prec > ft_strlen(str))
 		len_to_print_str = ft_strlen(str);
 	else
-		len_to_print_str = info.prec;
-	len_to_print_padding = info.width - len_to_print_str;
+		len_to_print_str = info->prec;
+	len_to_print_padding = info->width - len_to_print_str;
 	ret = 0;
-	if (info.minus == true)
+	if (info->minus == true)
 	{
 		ret += print_str_by_prec(str, len_to_print_str);
 		ret += print_padding(info, len_to_print_padding);
