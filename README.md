@@ -7,15 +7,20 @@
 3. 설명이 필요한 부분은 설명을 요청하고, 부족한 부분을 피드백 한다.
 4. 피드백을 바탕으로 각자의 코드를 리팩토링 한다.
 
-## Get_Next_Line
-|Reviewer|Reviewee|Date|
-|:---:|:---:|:---:|
-|jichung|snam|21.06.04|
-|jichung|sshin|21.06.11|
-|snam|sshin|21.06.15|
-|sshin|jichung|21.06.01|
-|sshin|snam|21.06.04|  
-## printf
+<br/>
+
+## get_next_line
+| Reviewer | Reviewee | Date |
+| -------- | -------- | ---- |
+| jichung | snam | 2021-06-04 |
+| jichung | sshin | 2021-06-11 |
+| snam | sshin | 2021-06-15 |
+| sshin | jichung | 2021-06-01 |
+| sshin | snam | 2021-06-04 |  
+
+<br/>
+
+## ft_printf
 |Reviewer|Reviewee|Date|
 |:---:|:---:|:---:|
 |jichung|||
